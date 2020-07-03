@@ -12,7 +12,7 @@ env:
 before_install:
   - chmod +x gradlew
   - chmod +x ./script/deploy.sh
-  - COVERAGE=0.3 ./gradlew -p ./monolithic/ui packageToContainer check
+  - ./gradlew -p ./monolithic/ui packageToContainer
 
 deploy:
   provider: script
