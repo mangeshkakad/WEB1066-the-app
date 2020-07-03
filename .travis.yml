@@ -12,7 +12,8 @@ env:
 
 script:
   - ./gradlew clean jar
-  - if [[( "$TESTFOLDER" == "monolithic/repository/order") || ( "$TESTFOLDER" == "monolithic/repository/user")]];
-    then COVERAGE=0.3 ./gradlew -p ./${TESTFOLDER} check ;
-    else COVERAGE=0.5 ./gradlew -p ./${TESTFOLDER} check ;
+  - if [[( "$TESTFOLDER" == "monolithic/repository/order") || ( "$TESTFOLDER" == "monolithic/repository/user")]]; then
+    COVERAGE=0.3 ./gradlew -p ./${TESTFOLDER} check ;
+    else
+    COVERAGE=0.5 ./gradlew -p ./${TESTFOLDER} check ;
     fi
