@@ -6,7 +6,7 @@ env:
   - secure: rJK80l4jSAtjWqxxDL1KsesiZLbMug7bfo5gjaAA0UFnCgGs1u+UIMQ/jigmbJswb1bK4xg+ol/4A5OApz/fEVk9aYVWBusl7s75tdV8Vgxsv6n4mUDAwCCnjYEWWUOhXfU0FSyhkOSrDA/OUR3CBUWb0X+JVIQY7o7EUXn9G+6+Qpj4gwun5SRCl7NxHlT7W3Obc/dmba0UjDgN2lxYmpQojyBrBZK+qRzH5bcpyTAGMKUN5Pn4d2UDCjCb6QvjcN3r7Dj0FqMj0qRr44xrDU0yhu+/gUQE0e1ZgZi6re+/pPLQAy2AgTsDF56l9gnAnvJmSORpW0Zu6QBXRMKrDztbe6VU/LDN6WmLpQhhhflfgs0IixhLCRfF8KMaHPepcp5gYKIVI7Eys3737Uu5V++l/nqXrtZHcS4vgQe9x0iUjUGOxE5QoeCYd557txbyvGOczpAhxrcLNYXX+BX2W5QmzJqvS8xZ6bkuJFIbQ0tnQgrV5ZwEEu50lYCP1eMvfgJEHQ/wp8sBrWm10/Ifb5zcAGkkmwcTyU+SOhOA9oO1UjJd6CsfN5X1o4OOWH+TJGj8dEwbklBkkmvTLGLWncL9myd14K6F1Zx+JTzrtQfeI6/wA98F6ZR21kDqZ7QV56lVAr+1MYs9kikWOpPfAAn0Zr8u+kWKwYonkyFDcZE=
 
 before_install:
-  - ./gradlew -p ./monolithic/ui packageToContainer monolithic-shop
+  - ./gradlew -p ./monolithic/ui monolithic-shop
   - docker login -u "$DOCKER_USERNAME" -p  "$DOCKER_PASSWORD"
   - docker tag "$DOCKER_USERNAME"/monolithic-shop:latest "$DOCKER_USERNAME"/monolithic-shop:latest
   - docker push "$DOCKER_USERNAME"/monolithic-shop:latest
