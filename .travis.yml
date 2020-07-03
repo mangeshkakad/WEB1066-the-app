@@ -1,7 +1,7 @@
 services:
   - docker
 env:
-  - DOCKER_LOGIN=mangeshkdocker
+  - DOCKER_USERNAME=mangeshkdocker
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 dd:
