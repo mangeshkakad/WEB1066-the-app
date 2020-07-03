@@ -5,12 +5,14 @@ env:
   - TESTFOLDER=monolithic/ui
   - TESTFOLDER=monolithic/service/cart
   - TESTFOLDER=monolithic/service/user
-  - TESTFOLDERV1=monolithic/repository/order
+  - TESTFOLDER=monolithic/repository/order
   - TESTFOLDER=monolithic/repository/cart
   - TESTFOLDER=monolithic/repository/product
-  - TESTFOLDERV1=monolithic/repository/user
+  - TESTFOLDER=monolithic/repository/user
 
 script:
   - ./gradlew clean jar
-  - COVERAGE=0.5 ./gradlew -p ./${TESTFOLDER} check
-  - COVERAGE=0.3 ./gradlew -p ./${TESTFOLDERV1} check
+  - if [[( "$TESTFOLDER" == "monolithic/repository/order") || ( "$TESTFOLDER" == "monolithic/repository/user")]];
+    then COVERAGE=0.3 ./gradlew -p ./${TESTFOLDER} check ;
+    else COVERAGE=0.5 ./gradlew -p ./${TESTFOLDER} check ;
+    fi
