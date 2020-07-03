@@ -1,19 +1,21 @@
+sudo: required
+services:
+- docker
 language: java
 jdk:
   - openjdk8
 env:
-  - TESTFOLDER=monolithic/ui
-  - TESTFOLDER=monolithic/service/cart
-  - TESTFOLDER=monolithic/service/user
-  - TESTFOLDER=monolithic/repository/order
-  - TESTFOLDER=monolithic/repository/cart
-  - TESTFOLDER=monolithic/repository/product
-  - TESTFOLDER=monolithic/repository/user
+  global:
+  - secure: qX0Bcpg9beGGG+69y4nwHjUbAhDUbd945g5NdlpzOxu2txm3tu/yQNxfwh+iNsYupWpZyO6EoOy+Wd0UmGy19j+W/4PeM76K053BtLPDFtA+trPs0TwkAetCK6HRg31on9yf1I0Z7ROV3p89dv4IQSor56cbjSsXipUvJj+On/5qURzxX/mIRIpMgotL4J2ABfvcRx19UfT7QmWN+hAS7DcQQfRy5YWcV/H7j0o+f+44AjcrFjqaWhPAsvsfQ0tVFeynkPb6WaO4sb/ItF5kFVAh192QvRVDE/typW5Tdf9xGRTfTn53GrRBeLT/6PxKuvsCaEY7dg3o6GLCTvT0PKNyrd71MPRABa0PyxhViZPjwUGzBKsHR4ZiASFXcDcuX6NRWUmqKZJIEL/flmLicplbW8ABqEFq9A71Qa0DeiVdxH9bG8rzch2b5ylshVxi7QgyWC87GE3Irzz+zEqMa3sZrixcktxjFhXPOqzoPTEtzrElG8QEptED0zJ3fd/AHWbu+e4Ln7IuO5yZizZbhI261mZvJY42qRMq0zaWFOSoLWqFb4AjgXmiuMVFSRpELNAmmbzqTH4rvFNUcrZErwCGNiaG5KVBzFgsz6V1DFabOnYJPjzUzDn1iaVka8hKUChqDmIbnwAMgkFkiIvUAjpnTbmQXkGVXRD3n4SvAJQ=
+  - secure: rJK80l4jSAtjWqxxDL1KsesiZLbMug7bfo5gjaAA0UFnCgGs1u+UIMQ/jigmbJswb1bK4xg+ol/4A5OApz/fEVk9aYVWBusl7s75tdV8Vgxsv6n4mUDAwCCnjYEWWUOhXfU0FSyhkOSrDA/OUR3CBUWb0X+JVIQY7o7EUXn9G+6+Qpj4gwun5SRCl7NxHlT7W3Obc/dmba0UjDgN2lxYmpQojyBrBZK+qRzH5bcpyTAGMKUN5Pn4d2UDCjCb6QvjcN3r7Dj0FqMj0qRr44xrDU0yhu+/gUQE0e1ZgZi6re+/pPLQAy2AgTsDF56l9gnAnvJmSORpW0Zu6QBXRMKrDztbe6VU/LDN6WmLpQhhhflfgs0IixhLCRfF8KMaHPepcp5gYKIVI7Eys3737Uu5V++l/nqXrtZHcS4vgQe9x0iUjUGOxE5QoeCYd557txbyvGOczpAhxrcLNYXX+BX2W5QmzJqvS8xZ6bkuJFIbQ0tnQgrV5ZwEEu50lYCP1eMvfgJEHQ/wp8sBrWm10/Ifb5zcAGkkmwcTyU+SOhOA9oO1UjJd6CsfN5X1o4OOWH+TJGj8dEwbklBkkmvTLGLWncL9myd14K6F1Zx+JTzrtQfeI6/wA98F6ZR21kDqZ7QV56lVAr+1MYs9kikWOpPfAAn0Zr8u+kWKwYonkyFDcZE=
 
-script:
-  - ./gradlew clean jar
-  - if [[( "$TESTFOLDER" == "monolithic/repository/order") || ( "$TESTFOLDER" == "monolithic/repository/user")]]; then
-    COVERAGE=0.4 ./gradlew -p ./${TESTFOLDER} check ;
-    else
-    COVERAGE=0.5 ./gradlew -p ./${TESTFOLDER} check ;
-    fi
+before_install:
+  - chmod +x gradlew
+  - chmod +x ./script/deploy.sh
+  - ./gradlew -p ./monolithic/ui packageToContainer
+
+deploy:
+  provider: script
+  script: bash ./script/deploy.sh
+  on:
+    branch: master
