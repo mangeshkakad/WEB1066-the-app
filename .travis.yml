@@ -8,6 +8,7 @@ env:
 
 before_install:
   - docker login -u "$DOCKER_USERNAME" -p  "$DOCKER_PASSWORD"
+  - chmod +x ./gradlew build connectedCheck
   - ./gradlew -p ./monolithic/ui packageToContainer
   - docker tag "$DOCKER_USERNAME"/monolithic-shop:latest "$DOCKER_USERNAME"/monolithic-shop:latest
   - docker push "$DOCKER_USERNAME"/monolithic-shop:latest
