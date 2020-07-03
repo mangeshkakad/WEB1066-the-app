@@ -5,10 +5,12 @@ env:
   - TESTFOLDER=monolithic/ui
   - TESTFOLDER=monolithic/service/cart
   - TESTFOLDER=monolithic/service/user
-  - TESTFOLDER=monolithic/repository/order
+  - TESTFOLDERV1=monolithic/repository/order
   - TESTFOLDER=monolithic/repository/cart
   - TESTFOLDER=monolithic/repository/product
-  - TESTFOLDER=monolithic/repository/user
+  - TESTFOLDERV1=monolithic/repository/user
+
 script:
   - ./gradlew clean jar
   - COVERAGE=0.5 ./gradlew -p ./${TESTFOLDER} check
+  - COVERAGE=0.3 ./gradlew -p ./${TESTFOLDERV1} check
