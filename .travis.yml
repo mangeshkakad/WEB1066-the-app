@@ -1,20 +1,8 @@
-language: java
-jdk:
-  - openjdk8
-  - openjdk9
+services:
+  - docker
 env:
-  - TESTFOLDER=monolithic/ui
-  - TESTFOLDER=monolithic/service/cart
-  - TESTFOLDER=monolithic/service/user
-  - TESTFOLDER=monolithic/repository/order
-  - TESTFOLDER=monolithic/repository/cart
-  - TESTFOLDER=monolithic/repository/product
-  - TESTFOLDER=monolithic/repository/user
-
+  - DOCKER_LOGIN=mangeshkdocker
 script:
-  - ./gradlew clean jar
-  - if [[( "$TESTFOLDER" == "monolithic/repository/order") || ( "$TESTFOLDER" == "monolithic/repository/user")]]; then
-    COVERAGE=0.3 ./gradlew -p ./${TESTFOLDER} check ;
-    else
-    COVERAGE=0.5 ./gradlew -p ./${TESTFOLDER} check ;
-    fi
+  - bash -c "echo \"${DOCKER_PASSWORD}\" | docker login --username \"${DOCKER_LOGIN}\" --password-stdin"
+dd:
+  secure: Kv2fnFnkUe/CRxSNXa2vCTZTl2JgUkFOquZF4BGH8trak4WC26fTX5NHnz5zqicikTgGyAPqhIg2o1e6S+d6XPh3nR/Q8/tj5Y19GskrKRX8dFwQfj8edLBDJ9jellOWA0fFfGwEf4uNNcbHTPrLJmhntVG4DjPUyauTorHYYlp81i0nbnzCvnDaMNDg9rmYGVte6F3qcTdIkdOIsEBVMpkbfWF9w4UQUisScgDhviYAYA9RUVTQ59qrkNgJyeTRYdCwrvS3DEnCBuP4TeSYuSslhe/fEYmQkJQlRDl8shFcR1mS2WGi7dk8gE0z8EwbWBmKSeGEJMEF42ZH8JAok+U3YIKZS0i0tRBW+7Th6NkkhcTq2fuh+6oOvh0EkkMBXj5FKTPMGXtI6GTpM9PKDLTnr8xGLY5D9QXPwnBifh5Wxe01JkHdDtSWuiJVEhjdma6BFuI0AmZeW52j5h048c2JRK9fQOYdrA6fc/LHcpwHEq8lIhmk0Y5LbXjhaWNEUZ3dwgxdHrOvY/d3Stlmcr03qSxFZNviK4sJiEt35OYvwchSLCpQbm3dmOzMAyw9fZIVy6e6zIAvFNcqN46yqF+eaOwkz5K5MXKa+ou2XCqlqZRlDU+RlzHEDnkMFHdr9Y5/iAieSqqBzbtnEMS7c06wv4PcHrWfxrIBEEuIthE=
