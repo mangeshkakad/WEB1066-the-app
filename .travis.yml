@@ -1,3 +1,4 @@
+sudo: required
 services:
 - docker
 env:
@@ -7,7 +8,6 @@ env:
 
 before_install:
   - docker login -u "$DOCKER_USERNAME" -p  "$DOCKER_PASSWORD"
-  - chmod -R 777 /home/travis/.gradle/wrapper/dists/gradle-4.3.1-bin/7yzdu24db77gi3zukl2a7o0xx/gradle-4.3.1/bin/gradle
   - ./gradlew -p ./monolithic/ui packageToContainer
   - docker tag "$DOCKER_USERNAME"/monolithic-shop:latest "$DOCKER_USERNAME"/monolithic-shop:latest
   - docker push "$DOCKER_USERNAME"/monolithic-shop:latest
