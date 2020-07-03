@@ -12,6 +12,7 @@ env:
 before_install:
   - chmod +x gradlew
   - chmod +x ./script/deploy.sh
+  
   - ./gradlew -p ./monolithic/ui packageToContainer
 
 deploy:
